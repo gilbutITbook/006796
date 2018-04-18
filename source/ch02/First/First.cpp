@@ -18,6 +18,9 @@
 
 
 // CFirstApp
+// 프로그램 전체를 관리하는 클래스 이다.
+// 프로그램 동작시 오직 하나의 인스턴스만 생성된다.
+// 도큐먼트 템플릿(Document Template), 메인 프레임 윈도우 등을 생성한다.
 
 BEGIN_MESSAGE_MAP(CFirstApp, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, &CFirstApp::OnAppAbout)
@@ -30,7 +33,8 @@ END_MESSAGE_MAP()
 
 
 // CFirstApp 생성
-
+// 생성자 함수
+// 특별한 작업은 없다.
 CFirstApp::CFirstApp()
 {
 	// 다시 시작 관리자 지원
@@ -57,11 +61,13 @@ CFirstApp theApp;
 
 // CFirstApp 초기화
 
-BOOL CFirstApp::InitInstance()
+BOOL CFirstApp::InitInstance() //프로그램을 생성하는데 필요한 모든 작업수행
 {
 	// 응용 프로그램 매니페스트가 ComCtl32.dll 버전 6 이상을 사용하여 비주얼 스타일을
 	// 사용하도록 지정하는 경우, Windows XP 상에서 반드시 InitCommonControlsEx()가 필요합니다. 
 	// InitCommonControlsEx()를 사용하지 않으면 창을 만들 수 없습니다.
+
+	// 
 	INITCOMMONCONTROLSEX InitCtrls;
 	InitCtrls.dwSize = sizeof(InitCtrls);
 	// 응용 프로그램에서 사용할 모든 공용 컨트롤 클래스를 포함하도록
@@ -70,6 +76,8 @@ BOOL CFirstApp::InitInstance()
 	InitCommonControlsEx(&InitCtrls);
 
 	CWinApp::InitInstance();
+	// 
+
 
 
 	// OLE 라이브러리를 초기화합니다.
@@ -99,6 +107,11 @@ BOOL CFirstApp::InitInstance()
 
 	// 응용 프로그램의 문서 템플릿을 등록합니다.  문서 템플릿은
 	//  문서, 프레임 창 및 뷰 사이의 연결 역할을 합니다.
+	// 도큐먼트 템플릿을 생성하는 코드
+	// 도큐먼트 템플릿 생성을 위해서는 차일드 프레임 클래스, 도큐먼트 클래스, 뷰 클래스 필요
+	// 이들클래스에서 사용될 리소스 아이디가 필요.
+
+	
 	CMultiDocTemplate* pDocTemplate;
 	pDocTemplate = new CMultiDocTemplate(IDR_FirstTYPE,
 		RUNTIME_CLASS(CFirstDoc),
@@ -107,9 +120,16 @@ BOOL CFirstApp::InitInstance()
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
+	// 생성된 도큐먼트 템플릿은 AddDocTemplate함수를 이용해서 등록
 
 	// 주 MDI 프레임 창을 만듭니다.
+	// 메인 프레임 윈도우를 생성하고, 이를 화면에 나타냄
+
+	//프로그램의 메인 윈도우 기능은 CMainFrame클래스가 담당
+	// new 연산자를 이용해서 CMainFrame 클래스의 인스턴스를 동적생성
 	CMainFrame* pMainFrame = new CMainFrame;
+	//LoadFrame 함수에서 IDR_MAINFRAME리소스 정보를 이용해서 프레임 윈도우를 만듬
+	
 	if (!pMainFrame || !pMainFrame->LoadFrame(IDR_MAINFRAME))
 	{
 		delete pMainFrame;
@@ -129,13 +149,14 @@ BOOL CFirstApp::InitInstance()
 	if (!ProcessShellCommand(cmdInfo))
 		return FALSE;
 	// 주 창이 초기화되었으므로 이를 표시하고 업데이트합니다.
+	// 새로 만든 메인 프레임 윈도우는 ShowWindow함수를 이용해서 화면에 나타냄
 	pMainFrame->ShowWindow(m_nCmdShow);
 	pMainFrame->UpdateWindow();
 
 	return TRUE;
 }
 
-int CFirstApp::ExitInstance()
+int CFirstApp::ExitInstance()//프로그램 종료시 마지막에 수행되는 함수
 {
 	//TODO: 추가한 추가 리소스를 처리합니다.
 	AfxOleTerm(FALSE);
@@ -179,6 +200,8 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 // 대화 상자를 실행하기 위한 응용 프로그램 명령입니다.
+// 단순히 대화 상자를 뜨워 준다. 도움말.......정보
+
 void CFirstApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
@@ -186,6 +209,3 @@ void CFirstApp::OnAppAbout()
 }
 
 // CFirstApp 메시지 처리기
-
-
-

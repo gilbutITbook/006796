@@ -1,6 +1,7 @@
 
 // FirstDoc.cpp : CFirstDoc 클래스의 구현
-//
+// 데이타이 보관및 관리를 담당한다.
+// 다중 문서 인터페이스의 경우 여러 개의 인스턴스가 생성될수 있다.
 
 #include "stdafx.h"
 // SHARED_HANDLERS는 미리 보기, 축소판 그림 및 검색 필터 처리기를 구현하는 ATL 프로젝트에서 정의할 수 있으며
@@ -37,6 +38,14 @@ CFirstDoc::~CFirstDoc()
 {
 }
 
+// 새문서가 생성 될때 호출
+// 사용자가 프로그램에서 [파일]>[새로 만들기]를 선택했을때 호출 된다.
+// 새 도큐먼트가 생성될 때 필요한 초기화 작업은 OnNewDocument함수에 추가하면된다.
+// 도큐먼트가 새로 생성되는 방법에는 완전히 새로운 도큐먼트를 만드는 경도 있지만,
+// [파일]>[열기] 메뉴처럼 기존의 파일을 열면서 새 도큐먼트가 생성되는 경우도 있다.
+// 이럴때는 도큐먼트 클래스에서 OnOpenDocument함수가 실행된다.
+// 만약 프로그램에서 파일 열기 기능을 추가하고 싶은 경우에는 OnOpenDocument함수를
+// 재정의해야한다.
 BOOL CFirstDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
@@ -65,6 +74,7 @@ void CFirstDoc::Serialize(CArchive& ar)
 	}
 }
 
+//클래스 뷰 목록에는 나타나지만 실제로는 사용하지 않는다.
 #ifdef SHARED_HANDLERS
 
 // 축소판 그림을 지원합니다.

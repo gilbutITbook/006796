@@ -1,10 +1,12 @@
-
 // FirstView.h : CFirstView 클래스의 인터페이스
 //
 
 #pragma once
 
-
+// 데이터의 출력을 담담하는 뷰 클래스
+// 뷰 영역은 차일드 프레임 윈도 안의 흰색 영역이며 이 영역 안에 글씨를 출력하거나
+// 그림을 그리는 작업을 담당
+// CFirstView클래스는 View클래스의 자식클래스
 class CFirstView : public CView
 {
 protected: // serialization에서만 만들어집니다.

@@ -5,7 +5,8 @@
 
 #pragma once
 
-
+// 프로그램에서 사용되는 데이터의 입출력과 관리를 담당하는 도큐먼트의 기능을 구현한 클래스
+// CFirstDoc클래스는 CDocument클래스로 부터 상속받아 만들어 진다.
 class CFirstDoc : public CDocument
 {
 protected: // serialization에서만 만들어집니다.
