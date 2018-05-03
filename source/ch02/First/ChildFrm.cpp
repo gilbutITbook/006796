@@ -12,6 +12,12 @@
 #endif
 
 // CChildFrame
+// 차일드 프레임의 윈도우의 기능을 담당한다.
+// 제목 표시줄, 창의 경계등으로 구성된다.
+// 차일드 프레임 윈도우에는 툴바도 없고, 상태바도 없기 때문에
+// OnCreate 함수 조차 재정의 되어있지 않다.
+// 차일드 프레임 윈도우 생성에 필요한 작업은 모두 CChildFrame의 상위 클래스의
+// CMDIChildWnd에서 이루어진다고 볼 수 있다.
 
 IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWnd)
 
